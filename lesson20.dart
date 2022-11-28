@@ -54,12 +54,16 @@ class Exchenger {
     print("1-Would you like to change to som?");
     print("2-Would u like som to another currency");
     int answer = int.parse(stdin.readLineSync()!);
+    // print(
+    //     "Choose currency which you want to change into som\n1) USD\n2) EUR\n3) RUB\n4) KZT");
+    // int ans = int.parse(stdin.readLineSync()!);
+
     if (answer == 1) {
-      Switch1 bob = Switch1();
-      bob.switch1(rub: rub, eur: eur, tenge: tenge, usd: usd);
+      // stdout.write("enter $ans: ");
+      // int som = int.parse(stdin.readLineSync()!);
+      Change().selling(rub: rub, eur: eur, tenge: tenge, usd: usd);
     } else if (answer == 2) {
-      Switch2 sd = Switch2();
-      sd.switch2(rub: rub, eur: eur, tenge: tenge, usd: usd);
+      Purchase().buying(rub: rub, eur: eur, tenge: tenge, usd: usd);
     } else {
       print("choose correct one");
       return exchange(rub: rub, eur: eur, tenge: tenge, usd: usd);
@@ -77,39 +81,27 @@ class Switch1 {
     print(
         "Choose currency which you want to change into som\n1) USD\n2) EUR\n3) RUB\n4) KZT");
     int ans = int.parse(stdin.readLineSync()!);
+    stdout.write("enter euro: ");
+    int som = int.parse(stdin.readLineSync()!);
+    double value;
     switch (ans) {
       case 1:
-        stdout.write("enter dollar: ");
-        int som = int.parse(stdin.readLineSync()!);
-        double value = usd.sell(som);
-        print("Your changing: $value ");
+      value=usd.sell(som);
         break;
-
       case 2:
-        stdout.write("enter euro: ");
-        int som = int.parse(stdin.readLineSync()!);
-        double value = eur.sell(som);
-        print("Your changing: $value");
+       value = eur.sell(som);
         break;
-
       case 3:
-        stdout.write("enter rubl: ");
-        int som = int.parse(stdin.readLineSync()!);
-        double value = rub.sell(som);
-        print("Your changing: $value");
+     value = rub.sell(som);
         break;
-
       case 4:
-        stdout.write("enter tenge: ");
-        int som = int.parse(stdin.readLineSync()!);
-        double value = tenge.sell(som);
-        print("Your changing: $value");
+        value = tenge.sell(som);
         break;
-
       default:
         print("Choose correct one");
         return switch1(rub: rub, eur: eur, tenge: tenge, usd: usd);
     }
+    print("Your changing: $value");
   }
 }
 
@@ -139,13 +131,13 @@ class Switch2 {
 
       case 3:
         int som = int.parse(stdin.readLineSync()!);
-        double value = rub.sell(som);
+        double value = rub.buy(som);
         print("Your changing: $value");
         break;
 
       case 4:
         int som = int.parse(stdin.readLineSync()!);
-        double value = tenge.sell(som);
+        double value = tenge.buy(som);
         print("Your changing: $value");
         break;
 
@@ -153,5 +145,64 @@ class Switch2 {
         print("Choose correct one");
         return switch2(rub: rub, eur: eur, tenge: tenge, usd: usd);
     }
+  }
+}
+
+class Change {
+  selling({
+    required RUB rub,
+    required EUR eur,
+    required KZT tenge,
+    required USD usd,
+  }) {
+    print(
+        "Choose currency which you want to change into som\n1) USD\n2) EUR\n3) RUB\n4) KZT");
+    String ans = stdin.readLineSync()!;
+    stdout.write("enter emount: ");
+    int som = int.parse(stdin.readLineSync()!);
+    double value;
+    if (ans == "1" || ans == "USD" || ans == "usd") {
+      value = usd.sell(som);
+    } else if (ans == "2" || ans == "EUR" || ans == "eur") {
+      value = eur.sell(som);
+    } else if (ans == "3" || ans == "RUB" || ans == "rub") {
+      value = rub.sell(som);
+    } else if (ans == "4" || ans == "KZT" || ans == "kzt") {
+      value = tenge.sell(som);
+    } else {
+      print("Choose correct one");
+      return selling(rub: rub, eur: eur, tenge: tenge, usd: usd);
+    }
+    print("Your changing: $value");
+  }
+}
+
+class Purchase {
+  buying({
+    required RUB rub,
+    required EUR eur,
+    required KZT tenge,
+    required USD usd,
+  }) {
+    print(
+        "Choose currency which you want to change som into\n1) USD\n2) EUR\n3) RUB\n4) KZT");
+    String ans = stdin.readLineSync()!;
+    stdout.write("enter som: ");
+    int som = int.parse(stdin.readLineSync()!);
+    double value;
+
+    if (ans == "1" || ans == "USD" || ans == "usd") {
+      value = usd.buy(som);
+    } else if (ans == "2" || ans == "EUR" || ans == "eur") {
+      value = eur.buy(som);
+    } else if (ans == "3" || ans == "RUB" || ans == "rub") {
+      value = rub.buy(som);
+    } else if (ans == "4" || ans == "KZT" || ans == "kzt") {
+      value = tenge.buy(som);
+    } else {
+      print("Choose correct one");
+      return buying(rub: rub, eur: eur, tenge: tenge, usd: usd);
+    }
+    print("Your changing: $value");
   }
 }
